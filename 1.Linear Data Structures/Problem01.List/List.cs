@@ -17,7 +17,7 @@
         {
             if(capacity < 0)
             {
-                throw new ArgumentOutOfRangeException("Capacity cannot be negative!");
+                throw new ArgumentOutOfRangeException("Capacity cannot be negative! Please insert valid capacity");
             }
             this.items = new T[capacity];
         }
