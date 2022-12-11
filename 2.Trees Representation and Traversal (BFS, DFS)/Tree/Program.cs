@@ -18,8 +18,10 @@
                            new Tree<int>(1),
                            new Tree<int>(103)
                            );
-
-             Console.WriteLine(string.Join((", "), tree.OrderDfs()));
+            tree.AddChild(34, new Tree<int>(3451));
+            Console.WriteLine(string.Join((", "), tree.OrderDfs()));
+            tree.Swap(42, 1);
+            Console.WriteLine(string.Join((", "), tree.OrderDfs()));
         }
     }
 }
