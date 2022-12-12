@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Text;
 
     public class Tree<T> : IAbstractTree<T>
     {
@@ -14,7 +15,7 @@
 
             foreach(var child in children)
             {
-                this.AddChild(child);
+                this.AddChild(child); 
             }
         }
 
@@ -31,12 +32,28 @@
 
         public void AddParent(Tree<T> parent)
         {
-            this.Parent = parent;
+            this.Parent = parent;         
         }
 
         public string AsString()
         {
-            throw new NotImplementedException();
+            var sb = new StringBuilder();
+
+            this.DfsAsString(sb, this, 0);
+
+            return sb.ToString().Trim();
+        }
+
+        private void DfsAsString(StringBuilder sb, Tree<T> tree, int indent)
+        {
+            sb.Append(' ', indent)
+                .AppendLine(tree.Key.ToString());
+                
+            foreach(var child in tree.children)
+            {
+                this.DfsAsString(sb, child, indent + 2);
+            }
+
         }
 
         public IEnumerable<T> GetInternalKeys()

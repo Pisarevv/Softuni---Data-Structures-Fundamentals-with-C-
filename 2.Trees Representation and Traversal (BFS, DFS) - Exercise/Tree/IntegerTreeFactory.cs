@@ -42,7 +42,7 @@
         {
             var parentNode = this.CreateNodeByKey(parent);
             var childNode = this.CreateNodeByKey(child);
-            childNode.AddChild(parentNode);
+            childNode.AddParent(parentNode);
             parentNode.AddChild(childNode);
 
            

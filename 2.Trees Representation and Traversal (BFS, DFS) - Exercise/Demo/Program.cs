@@ -11,7 +11,7 @@
             var treeFactory = new IntegerTreeFactory();
 
             var tree = treeFactory.CreateTreeFromStrings(input);
-            Console.WriteLine(tree);
+            Console.WriteLine(tree.AsString());
         }
     }
 }
