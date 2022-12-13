@@ -61,9 +61,30 @@
             throw new NotImplementedException();
         }
 
+        private void DfsKeys(List<T> result,Tree<T> currentSubtree,Predicate<Tree<T>> predicate)
+        {
+            if (predicate.Invoke(currentSubtree))
+            {
+                result.Add(currentSubtree.Key);
+            }
+            /*if(currentSubtree.children.Count == 0)
+            {
+                
+            }*/
+            foreach(var child in currentSubtree.children)
+            {
+                DfsKeys(result, child, predicate);
+            }
+
+        }
+
         public IEnumerable<T> GetLeafKeys()
         {
-            throw new NotImplementedException();
+            var result = new List<T>();
+            var node = this;
+            Predicate<Tree<T>> predicate = currNode => currNode.children.Count == 0;
+            DfsKeys(result, node, predicate);
+            return result;
         }
 
         public T GetDeepestKey()
