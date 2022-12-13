@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text;
 
     public class Tree<T> : IAbstractTree<T>
@@ -58,18 +59,18 @@
 
         public IEnumerable<T> GetInternalKeys()
         {
-            var result = new List<T>();
+            var result = new List<Tree<T>>();
             var node = this;
             Predicate<Tree<T>> predicate = currNode => currNode.children.Count > 0 && currNode.Parent != null;
             DfsKeys(result, node, predicate);
-            return result;
+            return result.Select(x => x.Key);
         }
 
-        private void DfsKeys(List<T> result,Tree<T> currentSubtree,Predicate<Tree<T>> predicate)
+        private void DfsKeys(List<Tree<T>> result,Tree<T> currentSubtree,Predicate<Tree<T>> predicate)
         {
             if (predicate.Invoke(currentSubtree))
             {
-                result.Add(currentSubtree.Key);
+                result.Add(currentSubtree);
             }
             foreach(var child in currentSubtree.children)
             {
@@ -80,7 +81,12 @@
 
         public IEnumerable<T> GetLeafKeys()
         {
-            var result = new List<T>();
+            return GetLeafNodes().Select(x => x.Key);
+        }
+
+        private List<Tree<T>> GetLeafNodes()
+        {
+            var result = new List<Tree<T>>();
             var node = this;
             Predicate<Tree<T>> predicate = currNode => currNode.children.Count == 0;
             DfsKeys(result, node, predicate);
@@ -89,7 +95,36 @@
 
         public T GetDeepestKey()
         {
-            throw new NotImplementedException();
+            int maxDepth = 0;
+            int currentDepth = 0;
+            Tree<T> deepestNode = null;
+            var leafs = GetLeafNodes();
+
+            foreach(var leaf in leafs)
+            {
+                currentDepth = this.GetDepth(leaf);
+                if(currentDepth > maxDepth)
+                {
+                    maxDepth = currentDepth;
+                    deepestNode = leaf;
+                }
+            }
+
+            return deepestNode.Key;
+        }
+     
+
+        private int GetDepth(Tree<T> leaf)
+        {
+            int depth = 0;
+            var tree = leaf;
+            while(tree.Parent != null)
+            {
+                depth++;
+                tree = tree.Parent;
+            }
+
+            return depth;
         }
 
         public IEnumerable<T> GetLongestPath()
