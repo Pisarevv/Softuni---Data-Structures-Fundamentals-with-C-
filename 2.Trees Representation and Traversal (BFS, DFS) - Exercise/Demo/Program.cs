@@ -13,10 +13,12 @@
             var treeFactory = new IntegerTreeFactory();
 
             var tree = treeFactory.CreateTreeFromStrings(input);
+            Console.WriteLine(tree.AsString());
             Console.WriteLine(String.Join(", ", tree.GetLeafKeys()));
             Console.WriteLine(String.Join(", ", tree.GetInternalKeys()));
             Console.WriteLine(String.Join(", ", tree.GetDeepestKey()));
-            Console.WriteLine(tree.AsString());
+            Console.WriteLine(String.Join(", ", tree.GetLongestPath()));
+            
         }
     }
 }
