@@ -58,7 +58,11 @@
 
         public IEnumerable<T> GetInternalKeys()
         {
-            throw new NotImplementedException();
+            var result = new List<T>();
+            var node = this;
+            Predicate<Tree<T>> predicate = currNode => currNode.children.Count > 0 && currNode.Parent != null;
+            DfsKeys(result, node, predicate);
+            return result;
         }
 
         private void DfsKeys(List<T> result,Tree<T> currentSubtree,Predicate<Tree<T>> predicate)
@@ -67,10 +71,6 @@
             {
                 result.Add(currentSubtree.Key);
             }
-            /*if(currentSubtree.children.Count == 0)
-            {
-                
-            }*/
             foreach(var child in currentSubtree.children)
             {
                 DfsKeys(result, child, predicate);
