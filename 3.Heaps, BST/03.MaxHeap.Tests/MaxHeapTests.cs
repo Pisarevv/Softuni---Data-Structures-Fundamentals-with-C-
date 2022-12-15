@@ -44,7 +44,7 @@ public class MaxHeapTests
     [Test]
     public void Add_MultipleElements_TestPeek()
     {
-        var heap = new MaxHeap<int>();
+         var heap = new MaxHeap<int>();
 
         heap.Add(3);
         Assert.AreEqual(3, heap.Peek());
